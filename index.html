@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Signal AI</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #0b1020;
+      color: white;
+      text-align: center;
+      padding: 30px 15px;
+    }
+
+    .box {
+      max-width: 500px;
+      margin: auto;
+      background: #151c30;
+      padding: 25px;
+      border-radius: 20px;
+    }
+
+    h1 {
+      margin-bottom: 10px;
+    }
+
+    select, button {
+      width: 100%;
+      padding: 14px;
+      margin-top: 12px;
+      border-radius: 10px;
+      border: none;
+      font-size: 16px;
+    }
+
+    button {
+      background: #16a34a;
+      color: white;
+      font-weight: bold;
+    }
+
+    #signal {
+      margin-top: 25px;
+      font-size: 30px;
+      font-weight: bold;
+    }
+
+    .note {
+      color: #aaa;
+      font-size: 13px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="box">
+    <h1>🤖 Smart Signal AI</h1>
+    <p>Trading Signal Dashboard</p>
+
+    <select id="market">
+      <option value="forex">💱 Forex</option>
+      <option value="crypto">🪙 Crypto</option>
+      <option value="binary">⚡ Binary Options</option>
+    </select>
+
+    <button onclick="getSignal()">GET SIGNAL</button>
+
+    <div id="signal">WAIT</div>
+
+    <p class="note">
+      Demo system — signals are not guaranteed.
+    </p>
+  </div>
+
+  <script>
+    function getSignal() {
+      const signals = ["BUY", "SELL", "WAIT"];
+      const signal = signals[Math.floor(Math.random() * signals.length)];
+
+      document.getElementById("signal").innerText = signal;
+    }
+  </script>
+
+</body>
+</html>
