@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Smart Signal AI</title>
+  <title>Smart Signal AI - Binary</title>
 
   <style>
     body {
@@ -11,7 +11,8 @@
       background: #0b1020;
       color: white;
       text-align: center;
-      padding: 30px 15px;
+      padding: 20px 15px;
+      margin: 0;
     }
 
     .box {
@@ -20,10 +21,16 @@
       background: #151c30;
       padding: 25px;
       border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.35);
     }
 
     h1 {
-      margin-bottom: 10px;
+      margin-bottom: 5px;
+    }
+
+    .subtitle {
+      color: #aaa;
+      margin-bottom: 25px;
     }
 
     select, button {
@@ -33,22 +40,58 @@
       border-radius: 10px;
       border: none;
       font-size: 16px;
+      box-sizing: border-box;
+    }
+
+    select {
+      background: #222b45;
+      color: white;
     }
 
     button {
       background: #16a34a;
       color: white;
       font-weight: bold;
+      cursor: pointer;
+    }
+
+    .signal-box {
+      margin-top: 25px;
+      padding: 20px;
+      background: #0f172a;
+      border-radius: 15px;
     }
 
     #signal {
-      margin-top: 25px;
-      font-size: 30px;
+      font-size: 36px;
       font-weight: bold;
+      margin: 10px 0;
+    }
+
+    #confidence {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+
+    .analysis {
+      background: #151c30;
+      padding: 15px;
+      border-radius: 12px;
+      text-align: left;
+    }
+
+    .analysis h3 {
+      text-align: center;
+      margin-top: 0;
+    }
+
+    .analysis p {
+      color: #ddd;
+      margin: 12px 0;
     }
 
     .note {
-      color: #aaa;
+      color: #888;
       font-size: 13px;
       margin-top: 20px;
     }
@@ -58,67 +101,136 @@
 <body>
 
   <div class="box">
-    <h1>🤖 Smart Signal AI</h1>
-    <p>Trading Signal Dashboard</p>
 
-    <select id="market">
-      <option value="forex">💱 Forex</option>
-      <option value="crypto">🪙 Crypto</option>
-      <option value="binary">⚡ Binary Options</option>
+    <h1>🤖 Smart Signal AI</h1>
+
+    <p class="subtitle">
+      Binary Options Analysis
+    </p>
+
+    <select id="pair">
+      <option value="EUR/USD">💱 EUR/USD</option>
+      <option value="GBP/USD">💱 GBP/USD</option>
+      <option value="USD/JPY">💱 USD/JPY</option>
     </select>
 
-    <button onclick="getSignal()">GET SIGNAL</button>
+    <select id="timeframe">
+      <option value="1 Minute">⏱️ 1 Minute</option>
+      <option value="5 Minutes">⏱️ 5 Minutes</option>
+    </select>
 
-    <div id="signal">WAIT</div>
+    <button onclick="generateSignal()">
+      🔄 GENERATE SIGNAL
+    </button>
+
+    <div class="signal-box">
+
+      <div id="signal">
+        WAIT 🟡
+      </div>
+
+      <div id="confidence">
+        Confidence: 50%
+      </div>
+
+      <div class="analysis">
+
+        <h3>🧠 AI Analysis</h3>
+
+        <p id="trend">
+          📈 Trend: Waiting...
+        </p>
+
+        <p id="momentum">
+          📊 Momentum: Waiting...
+        </p>
+
+        <p id="direction">
+          🔎 Market Direction: Waiting...
+        </p>
+
+        <p id="strength">
+          ⚡ Signal Strength: Waiting...
+        </p>
+
+      </div>
+
+    </div>
 
     <p class="note">
-      Demo system — signals are not guaranteed.
+      Demo analysis — signals are not guaranteed.
     </p>
+
   </div>
 
   <script>
-    function getSignal() {
-      const signals = ["BUY", "SELL", "WAIT"];
-      const signal = signals[Math.floor(Math.random() * signals.length)];
 
-      document.getElementById("signal").innerText = signal;
+    function generateSignal() {
+
+      const results = [
+
+        {
+          signal: "CALL 🟢",
+          confidence: 82,
+          trend: "Bullish",
+          momentum: "Positive",
+          direction: "Up",
+          strength: "Strong"
+        },
+
+        {
+          signal: "PUT 🔴",
+          confidence: 79,
+          trend: "Bearish",
+          momentum: "Negative",
+          direction: "Down",
+          strength: "Strong"
+        },
+
+        {
+          signal: "WAIT 🟡",
+          confidence: 65,
+          trend: "Sideways",
+          momentum: "Neutral",
+          direction: "Unclear",
+          strength: "Medium"
+        }
+
+      ];
+
+      const result =
+        results[Math.floor(Math.random() * results.length)];
+
+      const pair =
+        document.getElementById("pair").value;
+
+      const timeframe =
+        document.getElementById("timeframe").value;
+
+      document.getElementById("signal").innerText =
+        result.signal;
+
+      document.getElementById("confidence").innerText =
+        "Confidence: " + result.confidence + "%";
+
+      document.getElementById("trend").innerText =
+        "📈 Trend: " + result.trend;
+
+      document.getElementById("momentum").innerText =
+        "📊 Momentum: " + result.momentum;
+
+      document.getElementById("direction").innerText =
+        "🔎 " + pair + " Direction: " + result.direction;
+
+      document.getElementById("strength").innerText =
+        "⚡ Signal Strength: " +
+        result.strength +
+        " | " +
+        timeframe;
+
     }
+
   </script>
-</script>
 
-<div id="ai-signal-box" style="max-width:420px;margin:20px auto;padding:20px;border-radius:18px;background:#111;color:white;text-align:center;font-family:Arial,sans-serif;">
-  <h2>🤖 AI Trading Signal</h2>
-
-  <div id="signal" style="font-size:32px;font-weight:bold;margin:20px 0;">
-    WAIT 🟡
-  </div>
-
-  <div id="confidence" style="font-size:18px;">
-    Confidence: 50%
-  </div>
-
-  <button onclick="generateSignal()" style="margin-top:20px;padding:12px 24px;border:0;border-radius:10px;font-size:16px;font-weight:bold;">
-    🔄 Generate Signal
-  </button>
-</div>
-
-<script>
-function generateSignal() {
-  var signals = [
-    ["BUY 🟢", 82],
-    ["SELL 🔴", 79],
-    ["WAIT 🟡", 65]
-  ];
-
-  var result = signals[Math.floor(Math.random() * signals.length)];
-
-  document.getElementById("signal").innerText = result[0];
-  document.getElementById("confidence").innerText =
-    "Confidence: " + result[1] + "%";
-}
-</script>
-
-</body>
-</html>
 </body>
 </html>
