@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Smart Signal AI - Binary</title>
+  <title>Smart Signal AI</title>
 
   <style>
     body {
@@ -21,7 +21,6 @@
       background: #151c30;
       padding: 25px;
       border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0,0,0,.35);
     }
 
     h1 {
@@ -90,6 +89,12 @@
       margin: 12px 0;
     }
 
+    .status {
+      margin-top: 15px;
+      color: #aaa;
+      font-size: 13px;
+    }
+
     .note {
       color: #888;
       font-size: 13px;
@@ -105,7 +110,7 @@
     <h1>🤖 Smart Signal AI</h1>
 
     <p class="subtitle">
-      Binary Options Analysis
+      Binary Technical Analysis
     </p>
 
     <select id="pair">
@@ -135,7 +140,7 @@
 
       <div class="analysis">
 
-        <h3>🧠 AI Analysis</h3>
+        <h3>🧠 Technical Analysis</h3>
 
         <p id="trend">
           📈 Trend: Waiting...
@@ -155,10 +160,14 @@
 
       </div>
 
+      <div class="status" id="status">
+        Analysis engine ready
+      </div>
+
     </div>
 
     <p class="note">
-      Demo analysis — signals are not guaranteed.
+      Educational/demo analysis. Signals are not guaranteed.
     </p>
 
   </div>
@@ -167,65 +176,115 @@
 
     function generateSignal() {
 
-      const results = [
+      /*
+        Technical Analysis Engine
 
-        {
-          signal: "CALL 🟢",
-          confidence: 82,
-          trend: "Bullish",
-          momentum: "Positive",
-          direction: "Up",
-          strength: "Strong"
-        },
+        score:
+        + = bullish
+        - = bearish
+        0 = neutral
 
-        {
-          signal: "PUT 🔴",
-          confidence: 79,
-          trend: "Bearish",
-          momentum: "Negative",
-          direction: "Down",
-          strength: "Strong"
-        },
+        এই ভার্সনে market data simulated।
+        পরের ধাপে Live API data এখানে যুক্ত হবে।
+      */
 
-        {
-          signal: "WAIT 🟡",
-          confidence: 65,
-          trend: "Sideways",
-          momentum: "Neutral",
-          direction: "Unclear",
-          strength: "Medium"
-        }
+      const trendScore =
+        Math.floor(Math.random() * 101) - 50;
 
-      ];
+      const momentumScore =
+        Math.floor(Math.random() * 101) - 50;
 
-      const result =
-        results[Math.floor(Math.random() * results.length)];
+      const totalScore =
+        trendScore + momentumScore;
 
+      let signal;
+      let confidence;
+      let trend;
+      let momentum;
+      let direction;
+      let strength;
+
+      // Trend analysis
+      if (trendScore > 15) {
+        trend = "Bullish 📈";
+      } else if (trendScore < -15) {
+        trend = "Bearish 📉";
+      } else {
+        trend = "Sideways ↔️";
+      }
+
+      // Momentum analysis
+      if (momentumScore > 15) {
+        momentum = "Positive 🟢";
+      } else if (momentumScore < -15) {
+        momentum = "Negative 🔴";
+      } else {
+        momentum = "Neutral 🟡";
+      }
+
+      // Final signal
+      if (totalScore >= 30) {
+
+        signal = "CALL 🟢";
+        confidence =
+          Math.min(95, 65 + Math.abs(totalScore));
+
+        direction = "Up 📈";
+        strength = "Strong";
+
+      } else if (totalScore <= -30) {
+
+        signal = "PUT 🔴";
+        confidence =
+          Math.min(95, 65 + Math.abs(totalScore));
+
+        direction = "Down 📉";
+        strength = "Strong";
+
+      } else {
+
+        signal = "WAIT 🟡";
+        confidence = 60;
+
+        direction = "Unclear ↔️";
+        strength = "Medium";
+
+      }
+
+      // Pair and timeframe
       const pair =
         document.getElementById("pair").value;
 
       const timeframe =
         document.getElementById("timeframe").value;
 
+      // Update screen
       document.getElementById("signal").innerText =
-        result.signal;
+        signal;
 
       document.getElementById("confidence").innerText =
-        "Confidence: " + result.confidence + "%";
+        "Confidence: " + confidence + "%";
 
       document.getElementById("trend").innerText =
-        "📈 Trend: " + result.trend;
+        "📈 Trend: " + trend;
 
       document.getElementById("momentum").innerText =
-        "📊 Momentum: " + result.momentum;
+        "📊 Momentum: " + momentum;
 
       document.getElementById("direction").innerText =
-        "🔎 " + pair + " Direction: " + result.direction;
+        "🔎 " + pair +
+        " Direction: " + direction;
 
       document.getElementById("strength").innerText =
         "⚡ Signal Strength: " +
-        result.strength +
+        strength +
         " | " +
+        timeframe;
+
+      document.getElementById("status").innerText =
+        "Analysis completed for " +
+        pair +
+        " • " +
         timeframe;
 
     }
